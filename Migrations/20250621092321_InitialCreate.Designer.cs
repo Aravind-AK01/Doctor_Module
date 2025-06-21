@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doctor_Module.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250620114100_InitialCreate")]
+    [Migration("20250621092321_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,10 +20,15 @@ namespace Doctor_Module.Migrations
 
             modelBuilder.Entity("Appointment", b =>
                 {
-                    b.Property<string>("AppointmentID")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("AppointmentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("DoctorID")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DoctorName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -35,21 +40,26 @@ namespace Doctor_Module.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Patient_name")
+                    b.Property<string>("Patient_ID")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Prescription")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Prescription_ID")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("AppointmentID");
-
-                    b.HasIndex("DoctorID");
 
                     b.ToTable("Appointments");
                 });
@@ -102,22 +112,14 @@ namespace Doctor_Module.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("count")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TimeSlotID");
 
                     b.HasIndex("DoctorID");
 
                     b.ToTable("Timeslots");
-                });
-
-            modelBuilder.Entity("Appointment", b =>
-                {
-                    b.HasOne("Doctor_Module.Models.Doctor.Doctor", "doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("doctor");
                 });
 
             modelBuilder.Entity("Doctor_Module.Timeslots.Timeslot", b =>

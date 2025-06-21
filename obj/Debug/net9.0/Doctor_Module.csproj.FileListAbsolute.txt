@@ -151,3 +151,4 @@ C:\Users\u499230\Desktop\Doctor_Module\obj\Debug\net9.0\refint\Doctor_Module.dll
 C:\Users\u499230\Desktop\Doctor_Module\obj\Debug\net9.0\Doctor_Module.pdb
 C:\Users\u499230\Desktop\Doctor_Module\obj\Debug\net9.0\Doctor_Module.genruntimeconfig.cache
 C:\Users\u499230\Desktop\Doctor_Module\obj\Debug\net9.0\ref\Doctor_Module.dll
+C:\Users\u499230\Desktop\Doctor_Module\obj\Debug\net9.0\Doctor_Module.sourcelink.json

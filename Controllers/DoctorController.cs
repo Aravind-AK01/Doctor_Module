@@ -49,6 +49,15 @@ public class DoctorController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(existingDoctor);
     }
+    [HttpGet("doctor/{doctorId}/completed")]
+    public async Task<IActionResult> GetCompletedAppointments(string doctorId)
+    {
+        var completed = await _context.Appointments
+            .Where(a => a.DoctorID == doctorId && a.Status == "Completed")
+            .ToListAsync();
+
+        return Ok(completed);
+    }
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDoctor(string id)
     {

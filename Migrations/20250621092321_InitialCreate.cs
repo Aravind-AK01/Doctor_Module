@@ -11,6 +11,27 @@ namespace Doctor_Module.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    AppointmentID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DoctorID = table.Column<string>(type: "TEXT", nullable: false),
+                    DoctorName = table.Column<string>(type: "TEXT", nullable: false),
+                    Specialization = table.Column<string>(type: "TEXT", nullable: false),
+                    Emergency = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<string>(type: "TEXT", nullable: false),
+                    Prescription = table.Column<string>(type: "TEXT", nullable: true),
+                    Prescription_ID = table.Column<string>(type: "TEXT", nullable: false),
+                    Patient_ID = table.Column<string>(type: "TEXT", nullable: false),
+                    Issue = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.AppointmentID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
@@ -26,29 +47,6 @@ namespace Doctor_Module.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    AppointmentID = table.Column<string>(type: "TEXT", nullable: false),
-                    DoctorID = table.Column<string>(type: "TEXT", nullable: false),
-                    Patient_name = table.Column<string>(type: "TEXT", nullable: false),
-                    Issue = table.Column<string>(type: "TEXT", nullable: false),
-                    Time = table.Column<string>(type: "TEXT", nullable: false),
-                    Emergency = table.Column<string>(type: "TEXT", nullable: false),
-                    Prescription = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.AppointmentID);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Doctors_DoctorID",
-                        column: x => x.DoctorID,
-                        principalTable: "Doctors",
-                        principalColumn: "DoctorID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Timeslots",
                 columns: table => new
                 {
@@ -57,7 +55,8 @@ namespace Doctor_Module.Migrations
                     DoctorID = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<string>(type: "TEXT", nullable: false),
                     Start_Time = table.Column<string>(type: "TEXT", nullable: false),
-                    End_Time = table.Column<string>(type: "TEXT", nullable: false)
+                    End_Time = table.Column<string>(type: "TEXT", nullable: false),
+                    count = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,11 +68,6 @@ namespace Doctor_Module.Migrations
                         principalColumn: "DoctorID",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_DoctorID",
-                table: "Appointments",
-                column: "DoctorID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Timeslots_DoctorID",
