@@ -25,17 +25,29 @@ public class AppointmentController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
     {
+        // Validate doctor
         var doctor = await _context.Doctors.FindAsync(appointment.DoctorID);
         if (doctor == null || doctor.Name != appointment.DoctorName || doctor.Specialization != appointment.Specialization)
-        {
-            return BadRequest("Doctor information does not match or doctor does not exist.");
-        }
+            return BadRequest("Doctor info is invalid.");
 
+        // Check available timeslot for that doctor
+        var matchingSlot = await _context.Timeslots.FirstOrDefaultAsync(slot =>
+            slot.DoctorID == appointment.DoctorID &&
+            slot.Date == appointment.Date_Time.ToString("yyyy-MM-dd") &&
+            slot.Start_Time == appointment.Date_Time.ToString("HH:mm") &&
+            slot.count > 0);
+
+        if (matchingSlot == null)
+            return BadRequest("No available timeslot for the selected time.");
+
+        // Assign timeslot and decrement count
+        appointment.TimeSlotID = matchingSlot.TimeSlotID;
         appointment.Status = "Pending";
         appointment.Prescription = "none";
         appointment.Prescription_ID = Guid.NewGuid().ToString();
 
         _context.Appointments.Add(appointment);
+        matchingSlot.count -= 1;  // Reduce slot availability
         await _context.SaveChangesAsync();
 
         return Ok(appointment);
@@ -131,4 +143,4 @@ public class AppointmentController : ControllerBase
         });
     }
 
-} 
+}

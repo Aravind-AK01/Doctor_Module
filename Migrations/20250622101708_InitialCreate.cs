@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,12 +20,15 @@ namespace Doctor_Module.Migrations
                     DoctorID = table.Column<string>(type: "TEXT", nullable: false),
                     DoctorName = table.Column<string>(type: "TEXT", nullable: false),
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
+                    Date_Time = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Emergency = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false),
-                    Prescription = table.Column<string>(type: "TEXT", nullable: true),
+                    Prescription = table.Column<string>(type: "TEXT", nullable: false),
                     Prescription_ID = table.Column<string>(type: "TEXT", nullable: false),
                     Patient_ID = table.Column<string>(type: "TEXT", nullable: false),
-                    Issue = table.Column<string>(type: "TEXT", nullable: false)
+                    Issue = table.Column<string>(type: "TEXT", nullable: false),
+                    TimeSlotID = table.Column<int>(type: "INTEGER", nullable: true),
+                    Feedback = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
